@@ -13,6 +13,19 @@ class ProvidersSeeder extends Seeder
     {
 
         $providers = [
+            ['name' => "Bakker IT"],
+            ['name' => "HeartBeatIT"],
+            ['name' => "Host-C"],
+            ['name' => "HostDZire"],
+            ['name' => "Kuroit"],
+            ['name' => "Naranja"],
+            ['name' => "ProHost24"],
+            ['name' => "TNAhosting"],
+            ['name' => "xTom"],
+            ['name' => "Oracle"],
+            ['name' => "Hetzner"],
+            ['name' => "N100"],
+            ['name' => "NAS"],
             ['name' => "Myself"],
         ];
 

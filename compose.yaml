@@ -1,7 +1,7 @@
 services:
   app:
     container_name: idlers-app
-    image: ghcr.io/herobrauni/my-idlers:latest
+    image: ghcr.io/herobrauni/my-idlers
     restart: always
     ports:
       - 8000:8000
@@ -20,6 +20,4 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: pass
       MYSQL_DATABASE: db
-    volumes:
-      - ./db:/var/lib/mysql:Z
 networks: {}
