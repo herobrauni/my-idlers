@@ -3,15 +3,10 @@
     "extends": [
         "config:recommended"
     ],
-    "packageRules": [
+  "packageRules": [
     {
-      "description": "Automerge non-major updates",
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": ["*"],
       "automerge": true
-    },
-    "lockFileMaintenance": {
-      "enabled": true,
-      "automerge": true
-      }
+    }
   ]
 }
