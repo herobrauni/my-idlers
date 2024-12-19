@@ -60,3 +60,5 @@ storage/clockwork/
 !public/
 composer.phar
 public/.user.ini
+
+tmp/**
