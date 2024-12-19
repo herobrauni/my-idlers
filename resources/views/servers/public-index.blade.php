@@ -84,7 +84,6 @@
                                         {{$s->yabs[0]->gb5_multi ?? null}}
                                     @endif
                                 </td>
-                                <td class="text-nowrap">
                                     @if(Session::get('show_server_value_yabs') === 1)
                                         {{$s->yabs[0]->gb6_single ?? null}}
                                     @endif
