@@ -18,10 +18,24 @@ EOF
 php artisan key:generate --no-interaction --force
 fi
 
+# Wait for database to be ready
+until php artisan db:monitor > /dev/null 2>&1; do
+    echo "Waiting for database connection..."
+    sleep 2
+done
+
+# Check if database needs initialization by checking if OS table has entries
+DB_STATUS=$(php artisan tinker --execute="try { if(DB::table('os')->count() === 0) { echo 'needs_init'; } else { echo 'initialized'; } } catch(\Exception \$e) { echo 'needs_init'; }")
+if echo "$DB_STATUS" | grep -q "needs_init"; then
+    echo "Initializing database..."
+    php artisan migrate:fresh --seed --force
+    php artisan route:cache
+    php artisan cache:clear
+else
+    echo "Database already initialized"
+    php artisan migrate --force
+    php artisan route:cache
+    php artisan cache:clear
+fi
+
 php artisan serve --host=0.0.0.0 --port=8000 --env=production
-
-
-# docker compose exec app php artisan migrate:fresh --seed
-# docker compose exec app php artisan migrate
-# docker compose exec app php artisan route:cache
-# docker compose exec app php artisan cache:clear

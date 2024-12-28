@@ -1,6 +1,7 @@
 services:
   app:
     container_name: idlers-app
+    # image: idlers
     image: ghcr.io/herobrauni/my-idlers:latest
     restart: always
     ports:
@@ -20,3 +21,5 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: pass
       MYSQL_DATABASE: db
+    volumes:
+      - ./db:/var/lib/mysql:Z
