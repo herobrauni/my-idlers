@@ -135,9 +135,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <x-back-btn>
-                        <x-slot name="route">{{ route('servers.index') }}</x-slot>
-                    </x-back-btn>
+                    <x-back-button>
+                        <x-slot name="href">{{ route('servers.index') }}</x-slot>
+                        Back to servers
+                    </x-back-button>
                     <x-edit-btn>
                         <x-slot name="route">{{ route('servers.edit', $server_data->id) }}</x-slot>
                     </x-edit-btn>

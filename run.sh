@@ -5,7 +5,7 @@ if [ ! -e .env.production ]
 then
 cat > .env.production << EOF
 APP_NAME=MyIdlers
-APP_DEBUG=false
+APP_DEBUG=true
 APP_KEY=
 
 DB_CONNECTION=mysql
@@ -18,5 +18,10 @@ EOF
 php artisan key:generate --no-interaction --force
 fi
 
-# php artisan migrate:fresh --seed
 php artisan serve --host=0.0.0.0 --port=8000 --env=production
+
+
+# docker compose exec app php artisan migrate:fresh --seed
+# docker compose exec app php artisan migrate
+# docker compose exec app php artisan route:cache
+# docker compose exec app php artisan cache:clear

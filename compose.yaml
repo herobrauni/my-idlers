@@ -1,0 +1,22 @@
+services:
+  app:
+    container_name: idlers-app
+    image: ghcr.io/herobrauni/my-idlers:latest
+    restart: always
+    ports:
+      - 8999:8000
+    environment:
+      DB_HOST: db
+      DB_DATABASE: db
+      DB_USERNAME: user
+      DB_PASSWORD: pass
+  db:
+    image: mariadb:latest
+    container_name: idlers-db
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: passRoot
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+      MYSQL_DATABASE: db
