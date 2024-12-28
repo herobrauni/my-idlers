@@ -5,7 +5,7 @@ if [ ! -e .env.production ]
 then
 cat > .env.production << EOF
 APP_NAME=MyIdlers
-APP_DEBUG=true
+APP_DEBUG=false
 APP_KEY=
 
 DB_CONNECTION=mysql

@@ -11,5 +11,5 @@ WORKDIR /app
 COPY . .
 RUN composer install
 
-ENV APP_ENV production
+ENV APP_ENV=production
 ENTRYPOINT ["/app/run.sh"]
