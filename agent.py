@@ -12,6 +12,7 @@ import urllib.request
 import json
 import os
 import stat
+import datetime  # Add at top with other imports
 
 
 def get_cpu_cores():
@@ -209,7 +210,19 @@ def get_server_data(url, apikey):
     return server_data
 
 
+def is_file_recent(filepath, hours=2):
+    try:
+        file_time = datetime.datetime.fromtimestamp(os.path.getmtime(filepath))
+        age = datetime.datetime.now() - file_time
+        return age.total_seconds() <= hours * 3600
+    except FileNotFoundError:
+        return False
+
 def run_yabs(url, server_id, apikey):
+    if os.path.exists('yabs.json') and is_file_recent('yabs.json', 2):
+        print("Found recent yabs.json file (< 2h old), skipping benchmark")
+        return
+        
     command = f'curl -sL yabs.sh | bash -s -- -96 -w yabs.json -s "{url}/api/yabs/{server_id}/{apikey}"'
     print(command)
     subprocess.run([command], shell=True)
@@ -218,16 +231,7 @@ def run_yabs(url, server_id, apikey):
 def read_yabs_results():
     try:
         with open('yabs.json', 'r') as file:
-            data = json.load(file)
-            return {
-                'isp': data.get('ip_info', {}).get('isp'),
-                'asn': data.get('ip_info', {}).get('asn'),
-                'org': data.get('ip_info', {}).get('org'),
-                'city': data.get('ip_info', {}).get('city'),
-                'country': data.get('ip_info', {}).get('country'),
-                'virt_type': data.get('os', {}).get('vm'),
-                # Add more fields here as needed in the future
-            }
+            return json.load(file)
     except FileNotFoundError:
         print("yabs.json not found - did the benchmark complete successfully?")
         return None
@@ -347,9 +351,10 @@ if __name__ == "__main__":
     yabs_results = read_yabs_results()
     if yabs_results:
         print("YABS results loaded successfully")
-        note_content = f"ISP: {yabs_results['isp']}\nASN: {yabs_results['asn']}\nORG: {yabs_results['org']}\nCity: {yabs_results['city']}\nCountry: {yabs_results['country']}\nVirtualization: {yabs_results['virt_type']}"
+        note_content = json.dumps(yabs_results, indent=2)
     else:
-        note_content = "yabs.json not found"
+        note_content = json.dumps({"error": "yabs.json not found"})
+    
     if (note_id := get_note(url, apikey, server["server_id"])):
         print("Note exists ", note_id)
         update_note(url, apikey, server["server_id"], note_content, note_id)
