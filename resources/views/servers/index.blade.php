@@ -235,7 +235,7 @@
             })
             window.addEventListener('load', function () {
                 $('#servers-table').DataTable({
-                    "pageLength": 15,
+                    "pageLength": 50,
                     "lengthMenu": [5, 10, 15, 25, 30, 50, 75, 100],
                     "columnDefs": [
                         {"orderable": false, "targets": 1}
