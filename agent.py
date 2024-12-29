@@ -190,7 +190,7 @@ def get_server_data(url, apikey):
         "provider_id": 1,
         "ram_as_mb": get_ram(),
         "ram_type": "GB",
-        "ram": get_ram() >> 10,
+        "ram": (get_ram()+1023) >> 10,
         "server_type": 1,
         "show_public": 0,
         "ssh_port": 22,
