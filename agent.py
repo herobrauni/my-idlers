@@ -225,6 +225,7 @@ def read_yabs_results():
                 'org': data.get('ip_info', {}).get('org'),
                 'city': data.get('ip_info', {}).get('city'),
                 'country': data.get('ip_info', {}).get('country'),
+                'virt_type': data.get('os', {}).get('vm'),
                 # Add more fields here as needed in the future
             }
     except FileNotFoundError:
@@ -346,7 +347,7 @@ if __name__ == "__main__":
     yabs_results = read_yabs_results()
     if yabs_results:
         print("YABS results loaded successfully")
-        note_content = f"ISP: {yabs_results['isp']}\nASN: {yabs_results['asn']}\nORG: {yabs_results['org']}\nCity: {yabs_results['city']}\nCountry: {yabs_results['country']}"
+        note_content = f"ISP: {yabs_results['isp']}\nASN: {yabs_results['asn']}\nORG: {yabs_results['org']}\nCity: {yabs_results['city']}\nCountry: {yabs_results['country']}\nVirtualization: {yabs_results['virt_type']}"
     else:
         note_content = "yabs.json not found"
     if (note_id := get_note(url, apikey, server["server_id"])):
