@@ -31,12 +31,12 @@
                                 <tr>
                                     <td>{{ $row->main_domain }}</td>
                                     <td>{{ $row->reseller_type }}</td>
-                                    <td>{{ $row->accounts }}</td>
+                                    <td data-order="{{$row->accounts}}">{{ $row->accounts }}</td>
                                     <td class="text-nowrap">{{ $row->location->name }}</td>
                                     <td class="text-nowrap">{{ $row->provider->name }}</td>
-                                    <td>{{ $row->disk_as_gb }} <small>GB</small></td>
-                                    <td>{{ $row->domains_limit }}</td>
-                                    <td>{{ $row->price->price }} {{$row->price->currency}} {{\App\Process::paymentTermIntToString($row->price->term)}}</td>
+                                    <td data-order="{{$row->disk_as_gb}}">{{ $row->disk_as_gb }} <small>GB</small></td>
+                                    <td data-order="{{$row->domains_limit}}">{{ $row->domains_limit }}</td>
+                                    <td data-order="{{$row->price->as_usd}}">{{ $row->price->price }} {{$row->price->currency}} {{\App\Process::paymentTermIntToString($row->price->term)}}</td>
                                     <td>{{Carbon\Carbon::parse($row->price->next_due_date)->diffForHumans()}}</td>
                                     <td class="text-nowrap">{{ $row->owned_since }}</td>
                                     <td class="text-nowrap">
@@ -75,7 +75,8 @@
                     "pageLength": 15,
                     "lengthMenu": [5, 10, 15, 25, 30, 50, 75, 100],
                     "columnDefs": [
-                        {"orderable": false, "targets": [10]}
+                        {"orderable": false, "targets": [10]},
+                        {"type": "num", "targets": [3, 6, 7, 8]}
                     ],
                     "initComplete": function () {
                         $('.dataTables_length,.dataTables_filter').addClass('mb-2');

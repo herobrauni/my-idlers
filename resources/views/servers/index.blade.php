@@ -25,7 +25,7 @@
                     <a href="{{ route('servers-compare-choose') }}" class="btn btn-primary mb-3 ms-2">Compare
                         servers</a>
                     <div class="table-responsive">
-                        <table class="table table-bordered"  id="servers-table">
+                        <table class="table table-bordered"  id="active-servers-table">
                             <thead class="table-light">
                             <tr class="bg-gray-100">
                                 <th>Name</th>
@@ -49,15 +49,15 @@
                                         <td>{{ $server->hostname }}</td>
                                         <td class="text-center">{{ App\Models\Server::serviceServerType($server->server_type) }}</td>
                                         <td class="text-center">@if(isset($server->os)){!!App\Models\Server::osIntToIcon($server->os->id, $server->os->name)!!}@endif</td>
-                                        <td class="text-center">{{$server->cpu}}</td>
-                                        <td class="text-center">
+                                        <td class="text-center" data-order="{{$server->cpu}}">{{$server->cpu}}</td>
+                                        <td class="text-center" data-order="@if(isset($server->ram)){{ $server->ram_as_mb }}@else{{$server->ram_as_mb}}@endif">
                                             @if(isset($server->ram))
                                                 {{ $server->ram }}<small>{{$server->ram_type}}</small>
                                             @else
                                                 {{$server->ram_as_mb}}<small>MB</small>
                                             @endif
                                         </td>
-                                        <td class="text-center">
+                                        <td class="text-center" data-order="@if(isset($server->disk)){{ $server->disk_as_gb }}@else{{$server->disk}}@endif">
                                             @if(isset($server->disk))
                                                 {{ $server->disk }}<small>{{$server->disk_type}}</small>
                                             @else
@@ -66,8 +66,8 @@
                                         </td>
                                         <td class="text-nowrap">{{ $server->location->name }}</td>
                                         <td class="text-nowrap">{{ $server->provider->name }}</td>
-                                        <td class="text-nowrap">{{ $server->price->price }} {{$server->price->currency}} {{\App\Process::paymentTermIntToString($server->price->term)}}</td>
-                                        <td class="text-nowrap">
+                                        <td class="text-nowrap" data-order="{{$server->price->as_usd}}">{{ $server->price->price }} {{$server->price->currency}} {{\App\Process::paymentTermIntToString($server->price->term)}}</td>
+                                        <td class="text-nowrap" data-order="{{now()->diffInDays(Carbon\Carbon::parse($server->price->next_due_date), false)}}">
                                             {{number_format(now()->diffInDays(Carbon\Carbon::parse($server->price->next_due_date), false), 0)}}
                                             <small>days</small></td>
                                         <td class="text-nowrap"> {{ $server->owned_since }}</td>
@@ -107,13 +107,13 @@
                     <a href="{{ route('servers-compare-choose') }}" class="btn btn-primary mb-3 ms-2">Compare
                         servers</a>
                     <div class="table-responsive">
-                        <table class="table table-bordered"  id="servers-table">
+                        <table class="table table-bordered"  id="non-active-servers-table">
                             <thead class="table-light">
                             <tr class="bg-gray-100">
                                 <th>Name</th>
                                 <th class="text-center"><i class="fas fa-box" title="Virt"></i></th>
                                 <th class="text-center">OS</th>
-                                <th class="text-center"  onclick="sortTable(1)"><i class="fas fa-microchip" title="CPU"></i></th>
+                                <th class="text-center"><i class="fas fa-microchip" title="CPU"></i></th>
                                 <th class="text-center"><i class="fas fa-memory" title="ram"></i></th>
                                 <th class="text-center"><i class="fas fa-compact-disc" title="disk"></i></th>
                                 <th>Location</th>
@@ -132,15 +132,15 @@
                                             {{ App\Models\Server::serviceServerType($server->server_type) }}
                                         </td>
                                         <td class="text-center">{!!App\Models\Server::osIntToIcon($server->os->id, $server->os->name)!!}</td>
-                                        <td class="text-center">{{$server->cpu}}</td>
-                                        <td class="text-center">
+                                        <td class="text-center" data-order="{{$server->cpu}}">{{$server->cpu}}</td>
+                                        <td class="text-center" data-order="{{$server->ram_as_mb}}">
                                             @if($server->ram_as_mb > 1024)
                                                 {{ number_format(($server->ram_as_mb / 1024),0) }}<small>GB</small>
                                             @else
                                                 {{$server->ram_as_mb}}<small>MB</small>
                                             @endif
                                         </td>
-                                        <td class="text-center">
+                                        <td class="text-center" data-order="{{$server->disk_as_gb}}">
                                             @if($server->disk > 1000)
                                                 {{ number_format(($server->disk / 1024),5) }}<small>TB</small>
                                             @else
@@ -149,7 +149,7 @@
                                         </td>
                                         <td class="text-nowrap">{{ $server->location->name }}</td>
                                         <td class="text-nowrap">{{ $server->provider->name }}</td>
-                                        <td class="text-nowrap">{{ $server->price->price }} {{$server->price->currency}} {{\App\Process::paymentTermIntToString($server->price->term)}}</td>
+                                        <td class="text-nowrap" data-order="{{$server->price->as_usd}}">{{ $server->price->price }} {{$server->price->currency}} {{\App\Process::paymentTermIntToString($server->price->term)}}</td>
                                         <td class="text-center"> {{ $server->owned_since }}</td>
                                         <td class="text-nowrap">
                                             <form action="{{ route('servers.destroy', $server->id) }}" method="POST">
@@ -234,11 +234,28 @@
                 });
             })
             window.addEventListener('load', function () {
-                $('#servers-table').DataTable({
+                // Initialize active servers table
+                $('#active-servers-table').DataTable({
                     "pageLength": 50,
                     "lengthMenu": [5, 10, 15, 25, 30, 50, 75, 100],
                     "columnDefs": [
-                        {"orderable": false, "targets": 1}
+                        {"orderable": false, "targets": 1},
+                        {"type": "num", "targets": [3, 4, 5, 8, 9]}
+                    ],
+                    "initComplete": function () {
+                        $('.dataTables_length,.dataTables_filter').addClass('mb-2');
+                        $('.dataTables_paginate').addClass('mt-2');
+                        $('.dataTables_info').addClass('mt-2 text-muted ');
+                    }
+                });
+
+                // Initialize non-active servers table
+                $('#non-active-servers-table').DataTable({
+                    "pageLength": 50,
+                    "lengthMenu": [5, 10, 15, 25, 30, 50, 75, 100],
+                    "columnDefs": [
+                        {"orderable": false, "targets": 1},
+                        {"type": "num", "targets": [3, 4, 5, 7]}
                     ],
                     "initComplete": function () {
                         $('.dataTables_length,.dataTables_filter').addClass('mb-2');

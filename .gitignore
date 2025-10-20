@@ -60,3 +60,5 @@ storage/clockwork/
 !public/
 composer.phar
 public/.user.ini
+CLAUDE.md
+SORTING_FIX_SUMMARY.md
