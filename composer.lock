@@ -5863,16 +5863,16 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v11.1.5",
+            "version": "v11.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "158f2e9cf76d500c707a0ebd6cd2079cd87b8d4a"
+                "reference": "b48eb614d0474c23a9c8041563beef9dda39656d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/158f2e9cf76d500c707a0ebd6cd2079cd87b8d4a",
-                "reference": "158f2e9cf76d500c707a0ebd6cd2079cd87b8d4a",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/b48eb614d0474c23a9c8041563beef9dda39656d",
+                "reference": "b48eb614d0474c23a9c8041563beef9dda39656d",
                 "shasum": ""
             },
             "require": {
@@ -5901,16 +5901,16 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "11.x-dev"
-                },
                 "laravel": {
-                    "providers": [
-                        "Yajra\\DataTables\\DataTablesServiceProvider"
-                    ],
                     "aliases": {
                         "DataTables": "Yajra\\DataTables\\Facades\\DataTables"
-                    }
+                    },
+                    "providers": [
+                        "Yajra\\DataTables\\DataTablesServiceProvider"
+                    ]
+                },
+                "branch-alias": {
+                    "dev-master": "11.x-dev"
                 }
             },
             "autoload": {
@@ -5940,7 +5940,7 @@
             ],
             "support": {
                 "issues": "https://github.com/yajra/laravel-datatables/issues",
-                "source": "https://github.com/yajra/laravel-datatables/tree/v11.1.5"
+                "source": "https://github.com/yajra/laravel-datatables/tree/v11.1.6"
             },
             "funding": [
                 {
@@ -5948,7 +5948,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-26T01:43:52+00:00"
+            "time": "2025-01-21T03:15:46+00:00"
         }
     ],
     "packages-dev": [
