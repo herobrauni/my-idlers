@@ -27,7 +27,7 @@ class Reseller extends Model
 
         static::addGlobalScope('order', function (Builder $builder) {
             $array = Settings::orderByProcess(Session::get('sort_on') ?? 2);//created_at desc if not set
-            if (!in_array(Session::get('sort_on'), [3, 4, 5, 6], true)) {
+            if (!in_array(Session::get('sort_on'), [3, 4, 5, 6, 7, 8], true)) {
                 $builder->orderBy($array[0], $array[1]);
             }
         });
@@ -37,7 +37,7 @@ class Reseller extends Model
     {//All reseller hosting and relationships (no using joins)
         return Cache::remember("all_reseller", now()->addMonth(1), function () {
             $query = Reseller::with(['location', 'provider', 'price', 'ips', 'labels']);
-            if (in_array(Session::get('sort_on'), [3, 4, 5, 6], true)) {
+            if (in_array(Session::get('sort_on'), [3, 4, 5, 6, 7, 8], true)) {
                 $options = Settings::orderByProcess(Session::get('sort_on'));
                 $query->orderBy(Pricing::select("pricings.$options[0]")->whereColumn("pricings.service_id", "reseller_hosting.id"), $options[1]);
             }

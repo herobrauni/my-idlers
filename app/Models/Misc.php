@@ -26,7 +26,7 @@ class Misc extends Model
 
         static::addGlobalScope('order', function (Builder $builder) {
             $array = Settings::orderByProcess(Session::get('sort_on') ?? 2);//created_at desc if not set
-            if (!in_array(Session::get('sort_on'), [3, 4, 5, 6], true)) {
+            if (!in_array(Session::get('sort_on'), [3, 4, 5, 6, 7, 8], true)) {
                 $builder->orderBy($array[0], $array[1]);
             }
         });
@@ -36,7 +36,7 @@ class Misc extends Model
     {//All misc and relationships (no using joins)
         return Cache::remember("all_misc", now()->addMonth(1), function () {
             $query = Misc::with(['price']);
-            if (in_array(Session::get('sort_on'), [3, 4, 5, 6], true)) {
+            if (in_array(Session::get('sort_on'), [3, 4, 5, 6, 7, 8], true)) {
                 $options = Settings::orderByProcess(Session::get('sort_on'));
                 $query->orderBy(Pricing::select("pricings.$options[0]")->whereColumn("pricings.service_id", "misc_services.id"), $options[1]);
             }

@@ -62,13 +62,17 @@ class Settings extends Model
             return ['as_usd', 'asc'];
         } elseif ($value === 6) {//as_usd DESC
             return ['as_usd', 'desc'];
-        } elseif ($value === 7) {//owned_since ASC
+        } elseif ($value === 7) {//usd_per_month ASC
+            return ['usd_per_month', 'asc'];
+        } elseif ($value === 8) {//usd_per_month DESC
+            return ['usd_per_month', 'desc'];
+        } elseif ($value === 9) {//owned_since ASC
             return ['owned_since', 'asc'];
-        } elseif ($value === 8) {//owned_since DESC
+        } elseif ($value === 10) {//owned_since DESC
             return ['owned_since', 'desc'];
-        } elseif ($value === 9) {//updated_at ASC
+        } elseif ($value === 11) {//updated_at ASC
             return ['updated_at', 'asc'];
-        } elseif ($value === 10) {//updated_at DESC
+        } elseif ($value === 12) {//updated_at DESC
             return ['updated_at', 'desc'];
         }
         return ['created_at', 'desc'];
