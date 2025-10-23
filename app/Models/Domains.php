@@ -24,7 +24,7 @@ class Domains extends Model
     {//All domains and relationships (no using joins)
         return Cache::remember("all_domains", now()->addMonth(1), function () {
             $query = Domains::with(['provider', 'price', 'labels']);
-            if (in_array(Session::get('sort_on'), [3, 4, 5, 6], true)) {
+            if (in_array(Session::get('sort_on'), [3, 4, 5, 6, 7, 8], true)) {
                 $options = Settings::orderByProcess(Session::get('sort_on'));
                 $query->orderBy(Pricing::select("pricings.$options[0]")->whereColumn("pricings.service_id", "domains.id"), $options[1]);
             }

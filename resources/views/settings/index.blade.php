@@ -127,18 +127,26 @@
                                 </option>
                                 <option
                                     value="7" {{ ($setting->sort_on === 7) ? 'selected' : '' }}>
-                                    owned_since ASC
+                                    usd_per_month ASC (monthly normalized)
                                 </option>
                                 <option
                                     value="8" {{ ($setting->sort_on === 8) ? 'selected' : '' }}>
-                                    owned_since DESC
+                                    usd_per_month DESC (monthly normalized)
                                 </option>
                                 <option
                                     value="9" {{ ($setting->sort_on === 9) ? 'selected' : '' }}>
-                                    updated_at ASC
+                                    owned_since ASC
                                 </option>
                                 <option
                                     value="10" {{ ($setting->sort_on === 10) ? 'selected' : '' }}>
+                                    owned_since DESC
+                                </option>
+                                <option
+                                    value="11" {{ ($setting->sort_on === 11) ? 'selected' : '' }}>
+                                    updated_at ASC
+                                </option>
+                                <option
+                                    value="12" {{ ($setting->sort_on === 12) ? 'selected' : '' }}>
                                     updated_at DESC
                                 </option>
                             </select>

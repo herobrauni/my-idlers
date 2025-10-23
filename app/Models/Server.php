@@ -42,7 +42,7 @@ class Server extends Model
     {//All servers and relationships (no using joins)
         return Cache::remember("all_servers", now()->addMonth(1), function () {
             $query = Server::with(['location', 'provider', 'os', 'price', 'ips', 'yabs', 'yabs.disk_speed', 'yabs.network_speed', 'labels']);
-            if (in_array(Session::get('sort_on'), [3, 4, 5, 6], true)) {
+            if (in_array(Session::get('sort_on'), [3, 4, 5, 6, 7, 8], true)) {
                 $options = Settings::orderByProcess(Session::get('sort_on'));
                 $query->orderBy(Pricing::select("pricings.$options[0]")->whereColumn("pricings.service_id", "servers.id"), $options[1]);
             }
@@ -63,7 +63,7 @@ class Server extends Model
         return Cache::remember("all_active_servers", now()->addMonth(1), function () {
             $query = Server::where('active', 1)
                 ->with(['location', 'provider', 'os', 'ips', 'yabs', 'yabs.disk_speed', 'yabs.network_speed', 'labels', 'price']);
-            if (in_array(Session::get('sort_on'), [3, 4, 5, 6], true)) {
+            if (in_array(Session::get('sort_on'), [3, 4, 5, 6, 7, 8], true)) {
                 $options = Settings::orderByProcess(Session::get('sort_on'));
                 $query->orderBy(Pricing::select("pricings.$options[0]")->whereColumn("pricings.service_id", "servers.id"), $options[1]);
             }
