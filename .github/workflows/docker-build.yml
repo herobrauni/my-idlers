@@ -7,9 +7,13 @@ on:
       - master
   workflow_dispatch:
 
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+
+concurrency:
+  cancel-in-progress: true
 
 jobs:
   build-and-push:
