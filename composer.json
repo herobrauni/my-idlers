@@ -17,7 +17,7 @@
         "laravel/ui": "^v4.6.0",
         "yajra/laravel-datatables-oracle": "~v12.6.0",
         "ext-json": "*",
-        "illuminate/view": "^v11.6.0"
+        "illuminate/view": "^v12.0.0"
     },
     "require-dev": {
         "fakerphp/faker": "^v1.24.1",
