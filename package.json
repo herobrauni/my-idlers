@@ -19,7 +19,7 @@
     "datatables": "^1.10.18",
     "datatables.net-bs": "^2.1.8",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.7.1",
+    "jquery": "^4.0.0",
     "laravel-mix": "^6.0.49",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.82.0",
