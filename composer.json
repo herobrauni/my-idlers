@@ -15,7 +15,7 @@
         "laravel/framework": "^v12.0.0",
         "laravel/tinker": "^v2.10.0",
         "laravel/ui": "^v4.6.0",
-        "yajra/laravel-datatables-oracle": "~v12.6.0",
+        "yajra/laravel-datatables-oracle": "~v12.7.0",
         "ext-json": "*",
         "illuminate/view": "^v12.0.0"
     },
